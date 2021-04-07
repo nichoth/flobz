@@ -31,6 +31,10 @@ function getFoo () {
     })
 }
 
+// could keep the `match.action` function synchronous, returning a view,
+// but the view has a `useEffect` hook
+// would that work with ssr?
+
 router.addRoute('/foo', match => {
     console.log('route', match)
     // in here, would want to fetch the content,
@@ -93,7 +97,7 @@ route(function onRoute (path) {
             .then(res => {
                 var { view } = res
                 var el = html`<${shell} active=${path}>
-                    ${res.view ? view : null}
+                    ${view || null}
                 <//>`
                 render(el, document.getElementById('content'))
             })
