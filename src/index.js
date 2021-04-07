@@ -1,4 +1,5 @@
 import { render } from 'preact'
+// import { useEffect } from 'preact/hooks'
 import { html } from 'htm/preact'
 var route = require('route-event')()
 var router = require('ruta3')()
@@ -10,17 +11,39 @@ var router = require('ruta3')()
 //   need to use the main function to get the shell part
 router.addRoute('/', route => {
     console.log('route', route)
-    return function fooRoute () {
-        return html`<h1>home</h1>`
-    }
+
+    return Promise.resolve({
+        data: '',
+        view: html`<h1>home</h1>`
+    })
+
+    // this is synchronous
+    // return function fooRoute () {
+    //     return html`<h1>home</h1>`
+    // }
 })
 
+function getFoo () {
+    return new Promise((resolve, _reject) => {
+        setTimeout(() => {
+            resolve('fooooooo')
+        }, 3000)
+    })
+}
 
-router.addRoute('/foo', route => {
-    console.log('route', route)
-    return function fooRoute () {
-        return html`<h1>fooooo</h1>`
-    }
+router.addRoute('/foo', match => {
+    console.log('route', match)
+    // in here, would want to fetch the content,
+    // can return a promise or something
+    return getFoo()
+        .then(res => {
+            return { data: res, view: html`<h1>${res}</h1>` }
+        })
+
+    // return function fooRoute () {
+    //     // in here, would need to request the content
+    //     return html`<h1>fooooo</h1>`
+    // }
 })
 
 router.addRoute('/bar', () => {
@@ -61,13 +84,26 @@ route(function onRoute (path) {
     console.log('path', path)
     var m = router.match(path)
     console.log('match', m)
-    var view = m ? m.action(m) : null
-    
-    var el = html`<${shell} active=${path}>
-        ${view ? html`<${view}><//>` : null}
-    <//>`
 
-    render(el, document.getElementById('content'))
+    // sync version
+    // var view = m ? m.action(m) : null
+
+    if (m) {
+        m.action(m)
+            .then(res => {
+                var { view } = res
+                var el = html`<${shell} active=${path}>
+                    ${res.view ? view : null}
+                <//>`
+                render(el, document.getElementById('content'))
+            })
+    }
+    
+    // var el = html`<${shell} active=${path}>
+    //     ${view ? html`<${view}><//>` : null}
+    // <//>`
+
+    // render(el, document.getElementById('content'))
 })
 
 
