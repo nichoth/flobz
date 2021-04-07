@@ -3,15 +3,21 @@
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
+    "start": "npm run serve",
+    "build": "browserify -p esmify src/index.js --debug > public/bundle.js",
+    "serve": "budo src/index.js:bundle.js --pushstate --dir=public --live --open -- -p esmify --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "htm": "^3.0.4",
-    "preact": "^10.5.13"
+    "preact": "^10.5.13",
+    "route-event": "^3.1.0",
+    "ruta3": "^2.0.1"
   },
   "devDependencies": {
     "browserify": "^17.0.0",
-    "budo": "^11.6.4"
+    "budo": "^11.6.4",
+    "esmify": "^2.1.1"
   },
   "author": "Nick Thomas <nichoth@gmail.com>",
   "license": "ISC",
