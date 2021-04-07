@@ -22,12 +22,25 @@ router.addRoute('/bar', () => {
     }
 })
 
+router.addRoute('/baz', () => {
+    return function () {
+        return html`<h1>bazzzzz</h1>`
+    }
+})
+
+// active(href, realPath)
+
+function isActive (href, realPath) {
+    return href === realPath ? 'active' : ''
+}
+
 function shell (props) {
+    var { active } = props
     return html`<div>
         <nav>
             <ul>
-                <li><a href='/'>home</a></li>
-                <li><a href='/foo'>foo</a></li>
+                <li class="${isActive('/', active)}"><a href='/'>home</a></li>
+                <li class="${isActive('/foo', active)}"><a href='/foo'>foo</a></li>
                 <li><a href='/bar'>bar</a></li>
                 <li><a href='/baz'>baz</a></li>
             </ul>
@@ -43,7 +56,7 @@ route(function onRoute (path) {
     console.log('match', m)
     var view = m ? m.action(m) : null
     
-    var el = html`<${shell}>
+    var el = html`<${shell} active=${path}>
         ${view ? html`<${view}><//>` : null}
     <//>`
 
