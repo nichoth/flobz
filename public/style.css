@@ -1,0 +1,13 @@
+body {
+  background-color: pink;
+}
+
+li a {
+  transition: text-decoration 1s;
+  text-decoration: transparent underline;
+}
+li.active a {
+  text-decoration: blue underline;
+}
+
+/*# sourceMappingURL=style.css.map */
