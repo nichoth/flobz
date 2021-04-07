@@ -8,6 +8,13 @@ var router = require('ruta3')()
 // for each route that is passed in
 // create an html page from the function
 //   need to use the main function to get the shell part
+router.addRoute('/', route => {
+    console.log('route', route)
+    return function fooRoute () {
+        return html`<h1>home</h1>`
+    }
+})
+
 
 router.addRoute('/foo', route => {
     console.log('route', route)
