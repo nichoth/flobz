@@ -14,7 +14,7 @@ router.addRoute('/', route => {
     console.log('route', route)
 
     return {
-        getContent: getFoo,
+        getContent: getHome,
         view: view
     }
 
@@ -30,6 +30,14 @@ function getFoo () {
     return new Promise((resolve, _reject) => {
         setTimeout(() => {
             resolve('fooooooo')
+        }, 3000)
+    })
+}
+
+function getHome () {
+    return new Promise((resolve, _reject) => {
+        setTimeout(() => {
+            resolve('homeeeee')
         }, 3000)
     })
 }
@@ -133,6 +141,5 @@ route(function onRoute (path) {
         <//>`
         hydrate(_el, document.getElementById('content'))
     })
-
     
 })
