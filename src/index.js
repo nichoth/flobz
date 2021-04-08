@@ -1,8 +1,9 @@
-import { render } from 'preact'
+import { render, hydrate } from 'preact'
 // import { useEffect } from 'preact/hooks'
 import { html } from 'htm/preact'
 var route = require('route-event')()
 var router = require('ruta3')()
+const renderToString = require('preact-render-to-string');
 
 // Could make a router module that works as a static page generator also
 
@@ -35,14 +36,21 @@ function getFoo () {
 // but the view has a `useEffect` hook
 // would that work with ssr?
 
+// does ssr work if we use `useEffect` here?
+
 router.addRoute('/foo', match => {
     console.log('route', match)
+
     // in here, would want to fetch the content,
     // can return a promise or something
     return getFoo()
         .then(res => {
             return { data: res, view: html`<h1>${res}</h1>` }
         })
+
+    // return function fooRoute (props) {
+    //     return html`<h1>${props.foo || null}</h1>`
+    // }
 
     // return function fooRoute () {
     //     // in here, would need to request the content
@@ -84,15 +92,39 @@ function shell (props) {
     </div>`
 }
 
+
+
+// fake stuff
+routes.forEach(path => {
+    var m = router.match(path)
+    m.action(m)
+        .then(res => {
+            var { view } = res
+            var el = html`<${shell} active=${path}>
+                ${view || null}
+            <//>`
+            var content = renderToString(el)
+            // create files in the node version
+            fs.writeFile(prefix + '/' + path, `<html>${content}</html>`)
+        })
+})
+
+
+
+
 route(function onRoute (path) {
     console.log('path', path)
     var m = router.match(path)
     console.log('match', m)
 
-    // sync version
-    // var view = m ? m.action(m) : null
-
     if (m) {
+
+        // var view = m.action(m)
+        // var el = html`<${shell} active=${path}>
+        //     ${view || null}
+        // <//>`
+        // render(el, document.getElementById('content'))
+        
         m.action(m)
             .then(res => {
                 var { view } = res
@@ -102,19 +134,4 @@ route(function onRoute (path) {
                 render(el, document.getElementById('content'))
             })
     }
-    
-    // var el = html`<${shell} active=${path}>
-    //     ${view ? html`<${view}><//>` : null}
-    // <//>`
-
-    // render(el, document.getElementById('content'))
 })
-
-
-// route.generate
-// routes.forEach
-//    if (node) ssRender(mainFn(route))
-//    mainFn(route)
-
-
-
