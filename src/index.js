@@ -13,15 +13,17 @@ const renderToString = require('preact-render-to-string');
 router.addRoute('/', route => {
     console.log('route', route)
 
-    return Promise.resolve({
-        data: '',
-        view: html`<h1>home</h1>`
-    })
+    return {
+        getContent: getFoo,
+        view: view
+    }
 
-    // this is synchronous
-    // return function fooRoute () {
-    //     return html`<h1>home</h1>`
-    // }
+    function view (props) {
+        return html`<div>
+            <h1>home</h1>
+            <p>${props.res}</p>
+        </div>`
+    }
 })
 
 function getFoo () {
@@ -36,26 +38,20 @@ function getFoo () {
 // but the view has a `useEffect` hook
 // would that work with ssr?
 
-// does ssr work if we use `useEffect` here?
-
 router.addRoute('/foo', match => {
     console.log('route', match)
 
-    // in here, would want to fetch the content,
-    // can return a promise or something
-    return getFoo()
-        .then(res => {
-            return { data: res, view: html`<h1>${res}</h1>` }
-        })
+    return {
+        getContent: getFoo,
+        view: fooView
+    }
 
-    // return function fooRoute (props) {
-    //     return html`<h1>${props.foo || null}</h1>`
-    // }
-
-    // return function fooRoute () {
-    //     // in here, would need to request the content
-    //     return html`<h1>fooooo</h1>`
-    // }
+    function fooView (props) {
+        return html`<div>
+            <h1>foooooooo</h1>
+            <p>${props.res}</p>
+        </div>`
+    }
 })
 
 router.addRoute('/bar', () => {
@@ -69,8 +65,6 @@ router.addRoute('/baz', () => {
         return html`<h1>bazzzzz</h1>`
     }
 })
-
-// active(href, realPath)
 
 function isActive (href, realPath) {
     return href === realPath ? 'active' : ''
@@ -93,21 +87,23 @@ function shell (props) {
 }
 
 
-
 // fake stuff
-routes.forEach(path => {
-    var m = router.match(path)
-    m.action(m)
-        .then(res => {
-            var { view } = res
+if (window === undefined) {  // if we are in node
+    routes.forEach(path => {
+        var m = router.match(path)
+        var { view, getContent } = m.action(m)
+        getContent().then(res => {
             var el = html`<${shell} active=${path}>
-                ${view || null}
+                <${view || null} res=${res} />
             <//>`
-            var content = renderToString(el)
+            var _el = renderToString(el)
             // create files in the node version
-            fs.writeFile(prefix + '/' + path, `<html>${content}</html>`)
+            fs.writeFile(prefix + '/' + path, `<html>${_el}</html>`)
         })
-})
+    })
+} else {  // we are in browser
+    // do the route listener part 
+}
 
 
 
@@ -117,21 +113,26 @@ route(function onRoute (path) {
     var m = router.match(path)
     console.log('match', m)
 
-    if (m) {
-
-        // var view = m.action(m)
-        // var el = html`<${shell} active=${path}>
-        //     ${view || null}
-        // <//>`
-        // render(el, document.getElementById('content'))
-        
-        m.action(m)
-            .then(res => {
-                var { view } = res
-                var el = html`<${shell} active=${path}>
-                    ${view || null}
-                <//>`
-                render(el, document.getElementById('content'))
-            })
+    if (!m) {
+        console.log('not m')
+        return
     }
+
+
+    var { view, getContent } = m.action(m)
+
+    var el = html`<${shell} active=${path}>
+        <${view} />
+    <//>`
+
+    render(el, document.getElementById('content'))
+
+    getContent().then(res => {
+        var _el = html`<${shell} active=${path}>
+            <${view} res=${res} />
+        <//>`
+        render(_el, document.getElementById('content'))
+    })
+
+    
 })
