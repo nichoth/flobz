@@ -131,7 +131,7 @@ route(function onRoute (path) {
         var _el = html`<${shell} active=${path}>
             <${view} res=${res} />
         <//>`
-        render(_el, document.getElementById('content'))
+        hydrate(_el, document.getElementById('content'))
     })
 
     
