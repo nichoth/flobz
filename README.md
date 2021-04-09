@@ -34,5 +34,21 @@ browser-side routing in the application. That way it is the best of both
 worlds -- fast initial page load, plus fast route changes or css
 transitions on subsquent route changes.
 
+--------------------------------
 
+`ruta3` has a property [`.routes`](https://github.com/bevacqua/ruta3/blob/master/index.js#L66) that is the list of routes that we need.
+
+------------------------------------------
+
+```
+node --experimental-specifier-resolution=node ./src/index.js
+```
+
+We had to do some stuff to adapt this to `import` style:
+```js
+import path from 'path';
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+```
 
