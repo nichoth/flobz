@@ -26,3 +26,13 @@ need to request its content when you load the route, so that way it saves you fr
 
 * [hydrate() preact docs](https://preactjs.com/guide/v10/api-reference/#hydrate)
 * [htm-ssr.js](https://gist.github.com/developit/699c8d8f180a1e4eed58167f9c6711be)
+
+---------------------------------------------------
+
+We rendeer all routes as static pages, and also include js code for 
+browser-side routing in the application. That way it is the best of both
+worlds -- fast initial page load, plus fast route changes or css
+transitions on subsquent route changes.
+
+
+

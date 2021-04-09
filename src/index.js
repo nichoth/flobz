@@ -102,7 +102,7 @@ if (window === undefined) {  // if we are in node
         var { view, getContent } = m.action(m)
         getContent().then(res => {
             var el = html`<${shell} active=${path}>
-                <${view || null} res=${res} />
+                <${view} res=${res} />
             <//>`
             var _el = renderToString(el)
             // create files in the node version
@@ -126,7 +126,6 @@ route(function onRoute (path) {
         return
     }
 
-
     var { view, getContent } = m.action(m)
 
     var el = html`<${shell} active=${path}>
@@ -139,7 +138,7 @@ route(function onRoute (path) {
         var _el = html`<${shell} active=${path}>
             <${view} res=${res} />
         <//>`
-        hydrate(_el, document.getElementById('content'))
+        render(_el, document.getElementById('content'))
     })
     
 })
