@@ -5,6 +5,14 @@ A naive client side routing example
 we want to have a static website generated, but with every page having
 some JS that will take over the routing & rendering
 
+---------------------------------------
+
+## build
+```
+npm run build
+```
+
+
 --------------------------------------
 
 Could use the router object to pre-render every route that you add
