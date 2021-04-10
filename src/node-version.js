@@ -83,7 +83,7 @@ var _routes = router.routes.map(obj => obj.src)
 _routes.forEach(routePath => {
     var m = router.match(routePath)
     var { view, getContent } = m.action(m)
-    console.log('aaaaa', routePath)
+    // console.log('aaaaa', routePath)
     getContent().then(content => {
         var el = html`<${shell} active=${routePath}>
             <${view} content=${content} />

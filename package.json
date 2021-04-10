@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && concurrently --kill-others \"npm run serve\" \"npm run sass-watch\"",
     "copy": "cp src/index.html public",
-    "build": "npm run copy && npm run sass && browserify -p esmify src/index.js --debug > public/bundle.js",
+    "build": "npm run copy && npm run sass && browserify -p esmify src/index.js --debug > public/bundle.js && npm run build-ssr",
+    "build-ssr": "node --experimental-specifier-resolution=node ./src/node-version.js ",
     "serve": "budo src/index.js:bundle.js --pushstate --dir=public --live --open -- -p esmify --debug",
     "sass": "sass ./src/style/style.scss ./public/style.css",
     "sass-watch": "sass --watch src/style:public",
