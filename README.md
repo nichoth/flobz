@@ -141,6 +141,15 @@ collections:
     folder: "public/_posts/blog" # The path to the folder where the documents are stored
 ```
 
+We will use this `folder` path later when we fetch content
 
+post content has a URL like this:
+```
+https://flobz.netlify.app/_posts/blog/2021-04-10-title-3.md
+```
 
-
+## TODO
+* loop through the post names and create a link to each in the home page
+* for browserified version, could create a JSON file with the file names, then
+  require the json file in the app, and render with a link to each file
+* the page for a post needs to fetch the content when the page loads

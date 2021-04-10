@@ -7,25 +7,20 @@ import view from './view/index.js';
 import shell from './view/shell';
 // import path from 'path';
 
-function getFoo () {
-    return new Promise((resolve, _reject) => {
-        setTimeout(() => {
-            resolve('fooooooo')
-        }, 3000)
-    })
-}
-
-function getHome () {
-    return new Promise((resolve, _reject) => {
-        setTimeout(() => {
-            resolve('homeeeee')
-        }, 3000)
-    })
-}
+// TODO
+// var links = require('./links.json')
+var links = {}
 
 router.addRoute('/', () => {
     return {
-        getContent: getHome,
+        getContent: function getHome () {
+            return new Promise((resolve, _reject) => {
+                setTimeout(() => {
+                    resolve('homeeeee')
+                }, 3000)
+            })
+        },
+
         view: view.home
     }
 })
@@ -33,7 +28,14 @@ router.addRoute('/', () => {
 
 router.addRoute('/foo', match => {
     return {
-        getContent: getFoo,
+        getContent: function getFoo () {
+            return new Promise((resolve, _reject) => {
+                setTimeout(() => {
+                    resolve('fooooooo')
+                }, 3000)
+            })
+        },
+
         view: view.foo
     }
 })
@@ -62,6 +64,7 @@ router.addRoute('/baz', () => {
                 }, 3000)
             })
         },
+
         view: view.baz
     }
 })
@@ -113,7 +116,7 @@ route(function onRoute (_path) {
     if (!(count - 1)) {  // if this is the first page load
         getContent().then(content => {
             console.log('hydrating in here')
-            var el = html`<${shell} active=${_path}>
+            var el = html`<${shell} active=${_path} links=${links}>
                 <${view} content=${content} />
             <//>`
             hydrate(el, document.getElementById('content'))
@@ -125,14 +128,14 @@ route(function onRoute (_path) {
 
 
     // first render without content, to update the shell
-    var el = html`<${shell} active=${_path}>
+    var el = html`<${shell} active=${_path} links=${links}>
         <${view} />
     <//>`
     render(el, document.getElementById('content'))
 
     // then get the content and render again
     getContent().then(content => {
-        var _el = html`<${shell} active=${_path}>
+        var _el = html`<${shell} active=${_path} links=${links}>
             <${view} content=${content} />
         <//>`
         console.log('got content', content)
