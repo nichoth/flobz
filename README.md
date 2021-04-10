@@ -52,3 +52,13 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 ```
 
+-------------------------------------
+
+* https://medium.com/dev-channel/a-netflix-web-performance-case-study-c0bcde26a9d9
+* [htm-ssr.js](https://gist.github.com/developit/699c8d8f180a1e4eed58167f9c6711be)
+* https://preactjs.com/guide/v10/api-reference/#hydrate
+
+
+
+
+

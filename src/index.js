@@ -75,12 +75,39 @@ var route = Route()
 
 var count = 0
 
+
+
+// out here, we have just downloaded and run this js, so there is no state
+// could use *hydrate*
+
+
+
 route(function onRoute (_path) {
+
+
+    // in here, you want to call *render*
+
+
     count++
     var m = router.match(_path)
     console.log('match', m)
     var { view, getContent } = m ? m.action(m) : {}
     console.log('path', _path)
+
+    // would want a 404 page here
+    if (!m) {
+        console.log('not m')
+        return
+    }
+
+
+    // if this were a purely static site, not a single page app,
+    // we would want to *only hydrate*. There would be no route-event
+    // listener, each page would be downloaded then hydrated
+
+    // what if we requested *only some text or json* on each route change?
+
+
 
     if (!(count - 1)) {  // if this is the first page load
         getContent().then(content => {
@@ -94,19 +121,15 @@ route(function onRoute (_path) {
         return
     }
 
-    if (!m) {
-        console.log('not m')
-        return
-    }
 
 
-    // first render without content
+    // first render without content, to update the shell
     var el = html`<${shell} active=${_path}>
         <${view} />
     <//>`
     render(el, document.getElementById('content'))
 
-    // then get the contwent and render again
+    // then get the content and render again
     getContent().then(content => {
         var _el = html`<${shell} active=${_path}>
             <${view} content=${content} />
