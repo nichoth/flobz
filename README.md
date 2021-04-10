@@ -129,4 +129,18 @@ and the `admin/index.html`:
 </script>
 ```
 
+--------------------------------------------------
+
+Be sure to use a folder that is hosted publicly for the storage of post source
+content: 
+
+```yml
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog
+    label: "Blog" # Used in the UI
+    folder: "public/_posts/blog" # The path to the folder where the documents are stored
+```
+
+
+
 
