@@ -106,6 +106,7 @@ route(function onRoute (_path) {
     // listener, each page would be downloaded then hydrated
 
     // what if we requested *only some text or json* on each route change?
+    // how to do that with netlify CMS?
 
 
 
