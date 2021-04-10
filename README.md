@@ -1,5 +1,7 @@
 # flobz
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5c0cc90e-7806-455e-9444-6fc5705baa00/deploy-status)](https://app.netlify.com/sites/flobz/deploys)
+
 A naive client side routing example
 
 we want to have a static website generated, but with every page having
