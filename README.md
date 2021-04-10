@@ -61,21 +61,27 @@ const require = createRequire(import.meta.url);
 
 ----------------------------------------------
 
-## todo
 
 * https://preactjs.com/cli/pre-rendering/
 
 which routes are prerendered
 > Out of the box only the homepage is pre-rendered. In order to pre-render additional URLs (routes), you'll want to add a prerender-urls.json file to your project. 
 
-Just request the *JSON data* on client-side routing --
+Just request the *JSON data* on client-side routing event --
 
 > When a visitor first navigates to your app, the markup will contain only pre-rendered data for that specific page to avoid unnecessary download size. When they navigate to another route via **client-side navigation**, there won't be inlined pre-render data for that page. To get the data, make a request to `/<new-route>/ preact_prerender_data.json` to get the data that route. Preact CLI enables this by generating a preact_prerender_data.json file next to each pre-rendered page at build time.
+
+This is the same as what we have done in this example. Hydrate the first time,
+download and render subsequent pages. But we are doing it ad-hoc, without a prerendering component
 
 
 `@preact/prerender-data-provider`
 It either includes the inlined data, or fetches from JSON from a URL
 
+
+## todo
+* look at [unistore](https://github.com/developit/unistore)
+* look at [stockroom](https://github.com/developit/stockroom)
 
 
 
