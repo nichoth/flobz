@@ -92,4 +92,39 @@ It either includes the inlined data, or fetches from JSON from a URL
 * look at [stockroom](https://github.com/developit/stockroom)
 
 
+----------------------------------------------
+
+## netlify CMS
+
+* add an `admin` folder to the site root:
+```
+admin
+ ├ index.html
+ └ config.yml
+```
+
+* setup CMS configuration
+* add authentication on netlify UI
+* add the netlify identity script in two places, the main index html file,
+and the `admin/index.html`:
+
+```
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+```
+
+* add a redirecting script to `index.html`:
+```html
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+```
+
 

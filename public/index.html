@@ -5,10 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/style.css">
     <title>flobz</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
     <div id="content"><div><nav><ul><li class="active"><a href="/">home</a></li><li class><a href="/foo">foo</a></li><li class><a href="/bar">bar</a></li><li class><a href="/baz">baz</a></li></ul></nav><div><h1>home</h1><p>homeeeee</p></div></div></div>
     <script src="/bundle.js"></script>
+
+    <script>
+    if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+        if (!user) {
+            window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+            });
+        }
+        });
+    }
+    </script>
 </body>
 </html>
 
