@@ -5,7 +5,7 @@ var Route = require('route-event')
 var router = require('ruta3')()
 import view from './view/index.js';
 import shell from './view/shell';
-import path from 'path';
+// import path from 'path';
 
 function getFoo () {
     return new Promise((resolve, _reject) => {
@@ -83,19 +83,14 @@ route(function onRoute (_path) {
     console.log('path', _path)
 
     if (!(count - 1)) {  // if this is the first page load
-
         getContent().then(content => {
+            console.log('hydrating in here')
             var el = html`<${shell} active=${_path}>
                 <${view} content=${content} />
             <//>`
             hydrate(el, document.getElementById('content'))
         })
         console.log('returning')
-        var navEl = document.querySelector(`a[href='${_path}']`)
-        if (navEl) {
-            console.log('nav el')
-            navEl.className= 'active';
-        }
         return
     }
 
@@ -105,18 +100,18 @@ route(function onRoute (_path) {
     }
 
 
+    // first render without content
     var el = html`<${shell} active=${_path}>
         <${view} />
     <//>`
     render(el, document.getElementById('content'))
 
+    // then get the contwent and render again
     getContent().then(content => {
-        var el = html`<${shell} active=${_path}>
+        var _el = html`<${shell} active=${_path}>
             <${view} content=${content} />
         <//>`
         console.log('got content', content)
-        console.log('hydrating')
-        // hydrate(el, document.getElementById('content'))
-        render(el, document.getElementById('content'))
+        render(_el, document.getElementById('content'))
     })
 })
