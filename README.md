@@ -41,7 +41,7 @@ transitions on subsquent route changes.
 ------------------------------------------
 
 ```
-node --experimental-specifier-resolution=node ./src/index.js
+node --experimental-specifier-resolution=node ./src/node-version.js 
 ```
 
 We had to do some stuff to adapt this to `import` style:
