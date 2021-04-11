@@ -5,7 +5,7 @@ var router = require('ruta3')()
 import shell from './view/shell';
 import router from './routes'
 
-// TODO
+// TODO -- write links to disk
 // var links = require('./links.json')
 var links = {}
 
@@ -48,7 +48,6 @@ route(function onRoute (_path) {
         console.log('returning')
         return
     }
-
 
     // first render without content, to update the shell
     var el = html`<${shell} active=${_path} links=${links}>

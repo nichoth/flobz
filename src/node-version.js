@@ -1,21 +1,15 @@
-import path from 'path';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
-// import { render, hydrate } from 'preact'
-// import { useEffect } from 'preact/hooks'
-// import { html } from 'htm/preact'
+import path from 'path';
 import pkg from 'htm/preact/index.js'
 const { html } = pkg
-// var Route = require('route-event')
 const renderToString = require('preact-render-to-string');
-// import view from './view/index.js';
 import shell from './view/shell';
 var mkdirp = require('mkdirp')
 var hyperstream = require('hyperstream')
 var fs = require('fs')
-// var router = require('./routes')
 import router from './routes'
 
 // Could make a router module that works as a static page generator also

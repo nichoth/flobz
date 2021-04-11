@@ -15,7 +15,6 @@ router.addRoute('/', () => {
     }
 })
 
-
 router.addRoute('/foo', match => {
     return {
         getContent: function getFoo () {
