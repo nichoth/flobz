@@ -1,74 +1,13 @@
 import { render, hydrate } from 'preact'
-import pkg from 'htm/preact/index.js'
-const { html } = pkg
+import { html } from 'htm/preact'
 var Route = require('route-event')
 var router = require('ruta3')()
-import view from './view/index.js';
 import shell from './view/shell';
-// import path from 'path';
+import router from './routes'
 
 // TODO
 // var links = require('./links.json')
 var links = {}
-
-router.addRoute('/', () => {
-    return {
-        getContent: function getHome () {
-            return new Promise((resolve, _reject) => {
-                setTimeout(() => {
-                    resolve('homeeeee')
-                }, 3000)
-            })
-        },
-
-        view: view.home
-    }
-})
-
-
-router.addRoute('/foo', match => {
-    return {
-        getContent: function getFoo () {
-            return new Promise((resolve, _reject) => {
-                setTimeout(() => {
-                    resolve('fooooooo')
-                }, 3000)
-            })
-        },
-
-        view: view.foo
-    }
-})
-
-router.addRoute('/bar', () => {
-    return {
-        getContent: function getBar () {
-            return new Promise((resolve, _reject) => {
-                setTimeout(() => {
-                    resolve('barrrrrrr')
-                }, 3000)
-            })
-        },
-
-        view: view.bar
-    } 
-        
-})
-
-router.addRoute('/baz', () => {
-    return {
-        getContent: function getBaz () {
-            return new Promise((resolve, _reject) => {
-                setTimeout(() => {
-                    resolve('bazzzz')
-                }, 3000)
-            })
-        },
-
-        view: view.baz
-    }
-})
-
 
 var route = Route()
 
@@ -78,19 +17,7 @@ var route = Route()
 
 var count = 0
 
-
-
-// out here, we have just downloaded and run this js, so there is no state
-// could use *hydrate*
-
-
-
 route(function onRoute (_path) {
-
-
-    // in here, you want to call *render*
-
-
     count++
     var m = router.match(_path)
     console.log('match', m)
@@ -103,15 +30,12 @@ route(function onRoute (_path) {
         return
     }
 
-
     // if this were a purely static site, not a single page app,
     // we would want to *only hydrate*. There would be no route-event
     // listener, each page would be downloaded then hydrated
 
     // what if we requested *only some text or json* on each route change?
     // how to do that with netlify CMS?
-
-
 
     if (!(count - 1)) {  // if this is the first page load
         getContent().then(content => {
@@ -124,7 +48,6 @@ route(function onRoute (_path) {
         console.log('returning')
         return
     }
-
 
 
     // first render without content, to update the shell
