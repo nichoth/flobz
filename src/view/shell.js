@@ -6,9 +6,8 @@ function isActive (href, realPath) {
 }
 
 function shell (props) {
-    var { active } = props
+    var { active, links } = props
     console.log('active', active)
-    // console.log('isActive', isActive('/foo', active))
     return html`<div>
         <nav>
             <ul>

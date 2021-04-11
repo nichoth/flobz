@@ -9,74 +9,16 @@ const require = createRequire(import.meta.url);
 import pkg from 'htm/preact/index.js'
 const { html } = pkg
 // var Route = require('route-event')
-var router = require('ruta3')()
 const renderToString = require('preact-render-to-string');
-import view from './view/index.js';
+// import view from './view/index.js';
 import shell from './view/shell';
 var mkdirp = require('mkdirp')
 var hyperstream = require('hyperstream')
 var fs = require('fs')
+// var router = require('./routes')
+import router from './routes'
 
 // Could make a router module that works as a static page generator also
-
-function getFoo () {
-    return new Promise((resolve, _reject) => {
-        setTimeout(() => {
-            resolve('fooooooo')
-        }, 3000)
-    })
-}
-
-function getHome () {
-    return new Promise((resolve, _reject) => {
-        setTimeout(() => {
-            resolve('homeeeee')
-        }, 3000)
-    })
-}
-
-router.addRoute('/', () => {
-    return {
-        getContent: getHome,
-        view: view.home
-    }
-})
-
-
-router.addRoute('/foo', match => {
-    return {
-        getContent: getFoo,
-        view: view.foo
-    }
-})
-
-router.addRoute('/bar', () => {
-    return {
-        getContent: function getBar () {
-            return new Promise((resolve, _reject) => {
-                setTimeout(() => {
-                    resolve('barrrrrrr')
-                }, 3000)
-            })
-        },
-
-        view: view.bar
-    } 
-        
-})
-
-router.addRoute('/baz', () => {
-    return {
-        getContent: function getBaz () {
-            return new Promise((resolve, _reject) => {
-                setTimeout(() => {
-                    resolve('bazzzz')
-                }, 3000)
-            })
-        },
-        view: view.baz
-    }
-})
 
 var _routes = router.routes.map(obj => obj.src)
 
