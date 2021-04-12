@@ -33,6 +33,10 @@ router.addRoute('/posts/:slug', ({ params }) => {
             }
 
             return fetch('/_posts/blog/' + slug)
+                .then(res => {
+                    res.text().then(text => console.log('textttt', text))
+                    return res.text()
+                })
         },
 
         view: view.home  // change the view

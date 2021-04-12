@@ -19,6 +19,34 @@ router.addRoute('/', () => {
     }
 })
 
+
+router.addRoute('/posts/:slug', ({ params }) => {
+    var { slug } = params
+
+    return {
+        getContent: () => {
+            // if (typeof window === 'undefined') {
+            //     return new Promise((resolve, reject) => {
+            //         fs.readFile('...', (err, content) => {
+            //             if (err) return reject(err)
+            //             resolve(content)
+            //         })
+            //     })
+            // }
+
+            return fetch('/_posts/blog/' + slug)
+                .then(res => {
+                    res.text().then(text => console.log('textttt', text))
+                    return res.text()
+                })
+        },
+
+        view: view.home  // change the view
+    }
+})
+
+
+
 router.addRoute('/foo', () => {
     return {
         getContent: function getFoo () {
