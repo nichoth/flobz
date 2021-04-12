@@ -2,6 +2,7 @@ import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 var router = require('ruta3')()
 import view from './view/index.js';
+var fs = require('fs')
 
 router.addRoute('/', () => {
     return {
@@ -14,6 +15,27 @@ router.addRoute('/', () => {
         },
 
         view: view.home
+    }
+})
+
+router.addRoute('/posts/:slug', ({ params }) => {
+    var { slug } = params
+
+    return {
+        getContent: () => {
+            if (typeof window === 'undefined') {
+                return new Promise((resolve, reject) => {
+                    fs.readFile('...', (err, content) => {
+                        if (err) return reject(err)
+                        resolve(content)
+                    })
+                })
+            }
+
+            return fetch('/_posts/blog/' + slug)
+        },
+
+        view: view.home  // change the view
     }
 })
 
