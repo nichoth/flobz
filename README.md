@@ -166,3 +166,16 @@ need some kind of convention when you start a website for how the file names
 
 The filenames in `/public/_posts/blog` will be used in the actual routes,
 so be sure to name the files well.
+
+----------------------------------------------
+
+We can't use code in both browserify and node anymore
+
+in `src/routes.js` there are these 2 lines:
+```js
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+```
+
+They make things work in node, but it breaks it for browserify
+

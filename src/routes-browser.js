@@ -1,5 +1,7 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+// this is copied from `routes.js`. it's bad but we need browserify to work
+
+// import { createRequire } from 'module';
+// const require = createRequire(import.meta.url);
 var router = require('ruta3')()
 import view from './view/index.js';
 

@@ -1,9 +1,8 @@
 import { render, hydrate } from 'preact'
 import { html } from 'htm/preact'
 var Route = require('route-event')
-// var router = require('ruta3')()
 import shell from './view/shell';
-import router from './routes'
+import router from './routes-browser'
 
 // TODO -- write links to disk
 // var links = require('./links.json')
