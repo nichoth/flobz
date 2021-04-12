@@ -9,6 +9,14 @@ export default {
         </div>`
     },
 
+    post: function postView (props) {
+        console.log('posttttt', props)
+        return html`<div>
+            <h1>post view</h1>
+            <p>${props.content}</p>
+        </div>`
+    },
+
     foo: function fooView (props) {
         return html`<div>
             <h1>foo</h1>

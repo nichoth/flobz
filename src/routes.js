@@ -3,6 +3,8 @@ const require = createRequire(import.meta.url);
 var router = require('ruta3')()
 import view from './view/index.js';
 var fs = require('fs')
+import path from 'path';
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 router.addRoute('/', () => {
     return {
@@ -20,26 +22,31 @@ router.addRoute('/', () => {
 
 router.addRoute('/posts/:slug', ({ params }) => {
     var { slug } = params
+    // var dirPath = path.join(__dirname + '/../public', routePath)
+    var filePath = path.join(__dirname + '/../public/_posts/blog/', slug +
+        '.md')
+
+    // console.log('file pathththt', filePath)
 
     return {
         getContent: () => {
             if (typeof window === 'undefined') {
                 return new Promise((resolve, reject) => {
-                    fs.readFile('...', (err, content) => {
+                    fs.readFile(filePath, 'utf8', (err, content) => {
                         if (err) return reject(err)
                         resolve(content)
                     })
                 })
             }
 
-            return fetch('/_posts/blog/' + slug)
-                .then(res => {
-                    res.text().then(text => console.log('textttt', text))
-                    return res.text()
-                })
+            // return fetch('/_posts/blog/' + slug)
+            //     .then(res => {
+            //         res.text().then(text => console.log('textttt', text))
+            //         return res.text()
+            //     })
         },
 
-        view: view.home  // change the view
+        view: view.post  // change the view
     }
 })
 

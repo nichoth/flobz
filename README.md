@@ -179,3 +179,8 @@ const require = createRequire(import.meta.url);
 
 They make things work in node, but it breaks it for browserify
 
+---------------------------------------------
+
+Need to get a JSON file with a list of routes for the nav
+
+Need to build all the pages/routes for the files
