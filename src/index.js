@@ -1,7 +1,7 @@
 import { render, hydrate } from 'preact'
 import { html } from 'htm/preact'
 var Route = require('route-event')
-var router = require('ruta3')()
+// var router = require('ruta3')()
 import shell from './view/shell';
 import router from './routes'
 
