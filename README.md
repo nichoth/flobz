@@ -153,3 +153,16 @@ https://flobz.netlify.app/_posts/blog/2021-04-10-title-3.md
 * for browserified version, could create a JSON file with the file names, then
   require the json file in the app, and render with a link to each file
 * the page for a post needs to fetch the content when the page loads
+* handle routes with wildcards in them. The pages built should come from
+  the CMS generated source files, not the routes added to the router.
+* in the front-end version, need to request the content from the src file --
+  `/_posts/post-name`
+
+---------------------------------------------
+
+need some kind of convention when you start a website for how the file names
+/ routes will work
+
+
+The filenames in `/public/_posts/blog` will be used in the actual routes,
+so be sure to name the files well.

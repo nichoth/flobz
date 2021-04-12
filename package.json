@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && concurrently --kill-others \"npm run serve\" \"npm run sass-watch\"",
-    "copy": "cp src/index.html public",
+    "copy": "cp src/index.html public && mkdir -p public/uploads && cp src/uploads/* public/uploads",
     "build": "npm run copy && npm run sass && npm run build-browser && npm run build-ssr",
     "build-ssr": "node --experimental-specifier-resolution=node ./src/node-version.js ",
     "build-browser": "browserify -p esmify src/index.js --debug > public/bundle.js ",
@@ -21,7 +21,8 @@
     "preact": "^10.5.13",
     "preact-render-to-string": "^5.1.19",
     "route-event": "^3.1.0",
-    "ruta3": "^2.0.1"
+    "ruta3": "^2.0.1",
+    "through2": "^2.0.5"
   },
   "devDependencies": {
     "browserify": "^17.0.0",

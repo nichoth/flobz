@@ -1,10 +1,10 @@
+import path from 'path';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
-import path from 'path';
-import pkg from 'htm/preact/index.js'
-const { html } = pkg
+import pkg from 'htm/preact';
+const { html } = pkg;
 const renderToString = require('preact-render-to-string');
 import shell from './view/shell';
 var mkdirp = require('mkdirp')
@@ -14,7 +14,18 @@ import router from './routes'
 
 // Could make a router module that works as a static page generator also
 
+// @TODO
+// write the link hrefs to a json file
+// @TODO -- should create files based on the CMS source files, not the routes
+// in the router
 var _routes = router.routes.map(obj => obj.src)
+
+// srcFiles.forEach(filePath => {
+    // *important* -- need to use good file names in routes. BC the file name
+    // becomes the real route in the site
+    // var m = router.match('/posts/' + filePath)
+// })
+
 
 _routes.forEach(routePath => {
     var m = router.match(routePath)
