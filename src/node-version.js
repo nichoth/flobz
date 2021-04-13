@@ -22,12 +22,9 @@ fs.readdir(__dirname + '/../public/_posts/blog', (err, files) => {
 
     console.log('files', files)
 
-
     // write a list of routes
     var _files = files.map(file => path.basename(file, '.md'))
     fs.writeFileSync(__dirname + '/links.json', JSON.stringify(_files))
-
-
 
     files.forEach(fileName => {
         console.log('name', path.basename(fileName))
@@ -85,36 +82,3 @@ fs.readdir(__dirname + '/../public/_posts/blog', (err, files) => {
     })
     // ------------------------------------------------------
 })
-
-
-
-
-// var _routes = router.routes.map(obj => obj.src)
-// _routes.forEach(routePath => {
-//     var m = router.match(routePath)
-//     var { view, getContent } = m.action(m)
-//     // console.log('aaaaa', routePath)
-//     getContent().then(content => {
-//         var el = html`<${shell} active=${routePath}>
-//             <${view} content=${content} />
-//         <//>`
-
-//         var dirPath = path.join(__dirname + '/../public', routePath)
-//         console.log('dirpath', dirPath)
-//         var filePath = path.join(__dirname + '/../public', routePath,
-//             'index.html')
-//         console.log('filepath', filePath)
-//         mkdirp(dirPath).then(() => {
-//             var hs = hyperstream({
-//                 '#content': {
-//                     _appendHtml: renderToString(el)
-//                 }
-//             })
-
-//             var rs = fs.createReadStream(__dirname + '/index.html');
-//             var ws = fs.createWriteStream(filePath)
-//             rs.pipe(hs).pipe(ws)
-//         })
-
-//     })
-// })

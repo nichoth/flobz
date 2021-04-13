@@ -1,7 +1,5 @@
 import pkg from 'htm/preact/index.js'
 const { html } = pkg
-// import * as links from '../links.json'
-// var links = require('../links.json')
 
 function isActive (href, active) {
     return active.includes(href) ? 'active' : ''
@@ -12,9 +10,8 @@ function shell (props) {
 
     console.log('liniks', links)
     console.log('active', active)
-
-    // active /posts/title-4
     // liniks (4) ["2021-04-10-title-3", "aaaaa", "bbbbb", "title-4"]
+    // active /posts/title-4
 
     return html`<div>
         <nav>
