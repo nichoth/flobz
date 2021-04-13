@@ -19,7 +19,6 @@ var count = 0
 route(function onRoute (_path) {
     count++
     var m = router.match(_path)
-    console.log('match', m)
     var { view, getContent } = m ? m.action(m) : {}
     console.log('path', _path)
 
@@ -38,6 +37,7 @@ route(function onRoute (_path) {
 
     if (!(count - 1)) {  // if this is the first page load
         getContent().then(content => {
+            console.log('contenttttt', content)
             console.log('hydrating in here')
             var el = html`<${shell} active=${_path} links=${links}>
                 <${view} content=${content} />

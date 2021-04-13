@@ -27,6 +27,7 @@ fs.readdir(__dirname + '/../public/_posts/blog', (err, files) => {
         console.log('name', path.basename(fileName))
         var m = router.match('/posts/' + path.basename(fileName, '.md'))
         var { view, getContent } = m.action(m)
+
         getContent().then(content => {
             var el = html`<${shell} active=${path.basename(fileName, '.md')}>
                 <${view} content=${content} />
@@ -38,6 +39,7 @@ fs.readdir(__dirname + '/../public/_posts/blog', (err, files) => {
                 path.basename(fileName, '.md'))
             var indexPath = path.join(__dirname + '/../public/posts',
                 path.basename(fileName, '.md'), 'index.html')
+
             mkdirp(dirPath).then(() => {
                 var hs = hyperstream({
                     '#content': {

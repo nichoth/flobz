@@ -4,6 +4,8 @@
 // const require = createRequire(import.meta.url);
 var router = require('ruta3')()
 import view from './view/index.js';
+const matter = require('gray-matter');
+
 
 router.addRoute('/', () => {
     return {
@@ -25,14 +27,12 @@ router.addRoute('/posts/:slug', ({ params }) => {
 
     return {
         getContent: () => {
-            return fetch('/_posts/blog/' + slug)
-                .then(res => {
-                    res.text().then(text => console.log('textttt', text))
-                    return res.text()
-                })
+            return fetch('/_posts/blog/' + slug + '.md')
+                .then(res => res.text())
+                .then(text => matter(text).content)
         },
 
-        view: view.home  // change the view
+        view: view.post  // change the view
     }
 })
 

@@ -5,6 +5,7 @@ import view from './view/index.js';
 var fs = require('fs')
 import path from 'path';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const matter = require('gray-matter');
 
 router.addRoute('/', () => {
     return {
@@ -34,7 +35,7 @@ router.addRoute('/posts/:slug', ({ params }) => {
                 return new Promise((resolve, reject) => {
                     fs.readFile(filePath, 'utf8', (err, content) => {
                         if (err) return reject(err)
-                        resolve(content)
+                        resolve(matter(content).content)
                     })
                 })
             }

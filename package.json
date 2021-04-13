@@ -15,8 +15,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "gray-matter": "^4.0.2",
     "htm": "^3.0.4",
     "hyperstream": "^1.2.2",
+    "marked": "^2.0.3",
     "mkdirp": "^1.0.4",
     "preact": "^10.5.13",
     "preact-render-to-string": "^5.1.19",
