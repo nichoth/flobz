@@ -3,8 +3,8 @@ const { html } = pkg
 // import * as links from '../links.json'
 // var links = require('../links.json')
 
-function isActive (href, realPath) {
-    return href === realPath ? 'active' : ''
+function isActive (href, active) {
+    return active.includes(href) ? 'active' : ''
 }
 
 function shell (props) {
@@ -13,10 +13,13 @@ function shell (props) {
     console.log('liniks', links)
     console.log('active', active)
 
+    // active /posts/title-4
+    // liniks (4) ["2021-04-10-title-3", "aaaaa", "bbbbb", "title-4"]
+
     return html`<div>
         <nav>
             <ul>
-                <li class="${isActive('/', active)}"><a href='/'>home</a></li>
+                <li class="${active === '/' ? 'active' : ''}"><a href='/'>home</a></li>
                 <li class="${isActive('/foo', active)}"><a href='/foo'>foo</a></li>
                 <li class="${isActive('/bar', active)}"><a href='/bar'>bar</a></li>
                 <li class="${isActive('/baz', active)}"><a href='/baz'>baz</a></li>
