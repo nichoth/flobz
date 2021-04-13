@@ -3,10 +3,7 @@ import { html } from 'htm/preact'
 var Route = require('route-event')
 import shell from './view/shell';
 import router from './routes-browser'
-
-// TODO -- write links to disk
-// var links = require('./links.json')
-var links = {}
+var links = require('./links.json')
 
 var route = Route()
 
@@ -32,8 +29,6 @@ route(function onRoute (_path) {
     // we would want to *only hydrate*. There would be no route-event
     // listener, each page would be downloaded then hydrated
 
-    // what if we requested *only some text or json* on each route change?
-    // how to do that with netlify CMS?
 
     if (!(count - 1)) {  // if this is the first page load
         getContent().then(content => {

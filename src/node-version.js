@@ -14,22 +14,30 @@ import router from './routes'
 
 // Could make a router module that works as a static page generator also
 
-// @TODO
-// write the link hrefs to a json file
-// @TODO -- should create files based on the CMS source files, not the routes
-// in the router
 
 
 
 fs.readdir(__dirname + '/../public/_posts/blog', (err, files) => {
     if (err) return console.log('errrr', err)
+
+    console.log('files', files)
+
+
+    // write a list of routes
+    var _files = files.map(file => path.basename(file, '.md'))
+    fs.writeFileSync(__dirname + '/links.json', JSON.stringify(_files))
+
+
+
     files.forEach(fileName => {
         console.log('name', path.basename(fileName))
         var m = router.match('/posts/' + path.basename(fileName, '.md'))
         var { view, getContent } = m.action(m)
 
         getContent().then(content => {
-            var el = html`<${shell} active=${path.basename(fileName, '.md')}>
+            var el = html`<${shell} active=${path.basename(fileName, '.md')}
+                links=${_files}
+            >
                 <${view} content=${content} />
             <//>`
 
@@ -53,6 +61,29 @@ fs.readdir(__dirname + '/../public/_posts/blog', (err, files) => {
             })
         })
     })
+
+
+    // after doing the routes for all the pages, need to do the index page
+    var m = router.match('/')
+    var { view, getContent } = m.action(m)
+
+    getContent().then(content => {
+        var _el = html`<${shell} active=${'/'} links=${_files}>
+            <${view} content=${content} />
+        <//>`
+
+        var filePath = path.join(__dirname + '/../public', 'index.html')
+        var hs = hyperstream({
+            '#content': {
+                _appendHtml: renderToString(_el)
+            }
+        })
+
+        var rs = fs.createReadStream(__dirname + '/index.html')
+        var ws = fs.createWriteStream(filePath)
+        rs.pipe(hs).pipe(ws)
+    })
+    // ------------------------------------------------------
 })
 
 
