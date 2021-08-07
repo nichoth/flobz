@@ -87,8 +87,7 @@ This is the same as what we have done in this example. Hydrate the first time,
 download and render subsequent pages. But we are doing it ad-hoc, without a prerendering component
 
 
-`@preact/prerender-data-provider`
-It either includes the inlined data, or fetches from JSON from a URL
+`@preact/prerender-data-provider` -- It either includes the inlined data, or fetches from JSON from a URL
 
 
 ## todo
