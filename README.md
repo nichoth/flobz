@@ -41,7 +41,7 @@ need to request its content when you load the route, so that way it saves you fr
 
 ---------------------------------------------------
 
-We rendeer all routes as static pages, and also include js code for 
+We render all routes as static pages, and also include js code for 
 browser-side routing in the application. That way it is the best of both
 worlds -- fast initial page load, plus fast route changes or css
 transitions on subsquent route changes.
